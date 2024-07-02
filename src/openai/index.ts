@@ -1,3 +1,5 @@
 import {OpenaiHandler} from "./openai.handler";
 import {openai} from "./openai.connect";
-export const openAIHandler = new OpenaiHandler(openai, process.env.OPENAI_MODEL)
+
+import config from "./../../config.json"
+export const openAIHandler = new OpenaiHandler(openai, config['OPENAI_MODEL'])
