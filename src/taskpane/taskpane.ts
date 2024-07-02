@@ -15,12 +15,10 @@ export async function run() {
             const cell = activeCell.load(['address', 'values']);
             await context.sync();
             const payload = cell.values[0][0]
-            console.log(`renderThroughAI : ${payload}`);
             const result = await openAIHandler.renderThroughAI(JSON.stringify(payload))
             cell.values = [[result]]
             activeCell.format.autofitColumns();
             await context.sync();
-            console.log(`Range address : ${activeCell.address}.`);
         });
     } catch (error) {
         console.error(error);
