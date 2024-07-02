@@ -28,7 +28,11 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "@types/webpack": "^5.28.5",
     "core-js": "^3.36.0",
+    "dotenv": "^16.4.5",
+    "dotenv-webpack": "^8.1.0",
+    "openai": "^4.0.0",
     "regenerator-runtime": "^0.14.1"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
-//Register taskpane and event handler
+import {openAIHandler} from "../openai";
+
 Office.onReady((info) => {
     if (info.host === Office.HostType.Excel) {
         document.getElementById("sideload-msg").style.display = "none";
@@ -10,14 +11,14 @@ Office.onReady((info) => {
 export async function run() {
     try {
         await Excel.run(async (context) => {
-            const range = context.workbook.getSelectedRange();
-            //Get cell value and address
-            const cell = range[0][0].load(['address', 'values']);
-            //todo: Handle API call
-            const result = 'result'
-            cell.value = result
+            const activeCell = context.workbook.getActiveCell();
+            const cell = activeCell.load(['address', 'values']);
             await context.sync();
-            console.log(`Range address : ${range.address}.`);
+            const result = await openAIHandler.renderThroughAI(JSON.stringify(cell.values))
+            cell.values = [[result]]
+            activeCell.format.autofitColumns();
+            await context.sync();
+            console.log(`Range address : ${activeCell.address}.`);
         });
     } catch (error) {
         console.error(error);
