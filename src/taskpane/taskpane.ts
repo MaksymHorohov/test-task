@@ -14,7 +14,9 @@ export async function run() {
             const activeCell = context.workbook.getActiveCell();
             const cell = activeCell.load(['address', 'values']);
             await context.sync();
-            const result = await openAIHandler.renderThroughAI(JSON.stringify(cell.values))
+            const payload = cell.values[0][0]
+            console.log(`renderThroughAI : ${payload}.`);
+            const result = await openAIHandler.renderThroughAI(JSON.stringify(payload))
             cell.values = [[result]]
             activeCell.format.autofitColumns();
             await context.sync();
