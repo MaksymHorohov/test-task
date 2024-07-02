@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+
 export class OpenaiHandler {
     client: OpenAI
     model: string
@@ -9,11 +10,16 @@ export class OpenaiHandler {
     }
 
     async renderThroughAI(payload: string) {
-        const result = await this.client.chat.completions.create({
-            model: this.model,
-            messages: [
-                {role: 'user', content: payload}]
-        });
-        return result.choices[0].message
+        try {
+            const result = await this.client.chat.completions.create({
+                model: this.model,
+                messages: [
+                    {role: 'user', content: payload}]
+            });
+            return result?.choices[0]?.message || 'No response from API'
+        } catch (e) {
+            console.log(e)
+            // return 'Error response from API : ' + e.message
+        }
     }
 }
