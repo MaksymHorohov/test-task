@@ -18,7 +18,7 @@ export class OpenaiHandler {
                         role: 'user', content: payload
                     }]
             });
-            return result?.choices[0]?.message || 'No response from API'
+            return result?.choices[0]?.message.content || 'No response from API'
         } catch (e) {
             console.log(e)
         }
